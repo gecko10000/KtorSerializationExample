@@ -17,12 +17,24 @@ fun main(args: Array<String>) {
     r1.children.add(r2)
     embeddedServer(Netty, port = 10000) {
         routing {
+            // {
+            //      "name":"hello",
+            //      "children":["world"]
+            // }
             get("r1") {
                 call.respond(r1)
             }
+            // [
+            //      {
+            //          "name":"world",
+            //          "parent":"hello",
+            //          "children":[]
+            //      }
+            // ]
             get("r1children") {
                 call.respond(r1.children)
             }
+            // ["world"]
             get("r1childrenjson") {
                 call.respondText(Json.encodeToString(r1.children), contentType = ContentType.Application.Json)
             }
